@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if action == 'findname' %}
+    <input type="hidden" name="action" value="name">
+    <input name="name" id="namefind" type="text" placeholder="Название">
+    <input type="submit" placeholder="Название">
+    {% endif %}
+    {% if action == 'editcar' %}
+    {% for info in info %}
+    <input type="hidden" name="action" value="editcar">
+    <select name="server" id="server">
+        <option value="Province">Province</option>
+        <option value="CCDPlanet">CCDPlanet</option>
+    </select>
+    <input name="name" id="name" type="text" readonly placeholder="Название" value="{{ info.name }}">
+    <input name="price" id="price" type="number" placeholder="Цена" value="{{ info.price }}">
+    <input name="pricegos" id="pricegos" type="number" placeholder="ГосЦена" value="{{ info.sellprice }}">
+    <input name="max" id="max" type="number" placeholder="Максималка" value="{{ info.maxspeed }}">
+    <input name="tohun" id="tohun" type="number" step="any" placeholder="До 100" value="{{ info.tohun }}">
+    <input name="repair" id="repair" type="number" placeholder="Ремонт" value="{{ info.repair }}">
+    <input name="salon" id="salon" type="text" placeholder="Автосалон" value="{{ info.salon }}">
+    <input name="type" id="type" type="text" placeholder="Тип авто" value="{{ info.type }}">
+    <input name="addinfo" id="addinfo" type="text" placeholder="Дополнительная информация" value="{{ info.addinfo }}">
+    <input name="picture" id="picture" type="file" placeholder="Картинка">
+    <input type="submit" placeholder="Название">
+    {% endfor %}
+    {% endif %}
+
+</form>
+</body>
+</html>

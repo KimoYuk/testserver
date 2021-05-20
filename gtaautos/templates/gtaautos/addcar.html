@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <select name="server" id="server">
+        <option value="Province">Province</option>
+        <option value="CCDPlanet">CCDPlanet</option>
+        <option value="Test1">Test1</option>
+        <option value="Test2">Test2</option>
+        <option value="Test3">Test3</option>
+        <option value="Test4">Test4</option>
+    </select>
+    <input name="name" id="name" type="text" placeholder="Название">
+    <input name="price" id="price" type="number" placeholder="Цена">
+    <input name="pricegos" id="pricegos" type="number" placeholder="ГосЦена">
+    <input name="max" id="max" type="number" placeholder="Максималка">
+    <input name="tohun" id="tohun" type="number" step="any" placeholder="До 100">
+    <input name="repair" id="repair" type="number" placeholder="Ремонт">
+    <input name="salon" id="salon" type="text" placeholder="Автосалон">
+    <input name="type" id="type" type="text" placeholder="Тип авто">
+    <input name="addinfo" id="addinfo" type="text" placeholder="Дополнительная информация">
+    <input name="picture" id="picture" type="file" placeholder="Картинка">
+    <input type="submit" placeholder="Название">
+
+</form>
+</body>
+</html>

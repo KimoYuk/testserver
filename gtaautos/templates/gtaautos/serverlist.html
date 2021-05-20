@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="table">
+    {% for server in servers %}
+    <tr class="">
+        <td class="row">{{ server.server }}</td>
+    </tr>
+
+    {% endfor %}
+</table>
+</body>
+<script>
+    let rows=document.getElementsByClassName('row')
+    for (var i =0;i<rows.length;i++) {
+        console.log(window.location.href)
+        let newUrl=window.location.href+i+'/'
+        console.log(newUrl)
+        rows[i].addEventListener('click', function(){ 
+            window.location.href = newUrl
+        })
+    }
+</script>
+</html>
