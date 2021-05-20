@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    {% include 'gtaautos/includes/head.html' %}
 </head>
+
 <body>
+{% if user.is_authenticated %}
+{% include 'gtaautos/includes/headeradmin.html' %}
+<div class="back" id="back"><p>Назад</p></div>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <select name="server" id="server">
@@ -28,5 +33,17 @@
     <input type="submit" placeholder="Название">
 
 </form>
+{% else %}
+{% include 'gtaautos/includes/header.html' %}
+<div>Here is no page for you</div>
+
+{% endif %}
 </body>
+<script>
+    back.addEventListener('click', function(){
+        history.back()
+        // alert('dd')
+    })
+</script>
+
 </html>

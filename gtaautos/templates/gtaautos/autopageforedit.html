@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    {% include 'gtaautos/includes/head.html' %}
+    <style>
+        .picture{
+            background-image: url({{auto.picture}});
+        }
+
+
+    </style>
+</head>
+<body>
+{% if user.is_authenticated %}
+
+{% include 'gtaautos/includes/headeradmin.html' %}
+<div class="back" id="back"><p>Назад</p></div>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="editcar">
+    <select name="server" id="server">
+        {% for server in servers %}
+        <option value="{{server.server}}">{{server.server}}</option>
+        {% endfor %}
+    </select>
+    <input name="name" id="name" type="text" placeholder="Название" value="{{ auto.name }}">
+    <input name="price" id="price" type="number" placeholder="Цена" value="{{ auto.price }}">
+    <input name="pricegos" id="pricegos" type="number" placeholder="ГосЦена" value="{{ auto.sellprice }}">
+    <input name="max" id="max" type="number" placeholder="Максималка" value="{{ auto.maxspeed }}">
+    <input name="tohun" id="tohun" type="number" step="any" placeholder="До 100" value="{{ auto.tohun }}">
+    <input name="repair" id="repair" type="number" placeholder="Ремонт" value="{{ auto.repair }}">
+    <input name="salon" id="salon" type="text" placeholder="Автосалон" value="{{ auto.salon }}">
+    <input name="type" id="type" type="text" placeholder="Тип авто" value="{{ auto.type }}">
+    <input name="addinfo" id="addinfo" type="text" placeholder="Дополнительная информация" value="{{ auto.addinfo }}">
+    <input name="picture" id="picture" type="file" placeholder="Картинка">
+    <select name="ifdelete" id="ifdelete">
+        <option value="Not delete">Not delete</option>
+        <option value="Not delete">Not delete</option>
+        <option value="Not delete">Not delete</option>
+        <option value="Not delete">Not delete</option>
+        <option value="Not delete">Not delete</option>
+        <option value="Delete">Delete</option>
+        <option value="Not delete">Not delete</option>
+        <option value="Not delete">Not delete</option>
+        <option value="Not delete">Not delete</option>
+    </select>
+    <input type="submit" placeholder="Название">
+    {% else %}
+    {% include 'gtaautos/includes/header.html' %}
+    <div>Here is no page for you</div>
+    {% endif %}
+</body>
+<script>
+    back.addEventListener('click', function(){
+        history.back()
+        // alert('dd')
+    })
+
+
+</script>
+</html>

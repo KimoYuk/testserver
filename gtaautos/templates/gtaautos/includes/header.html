@@ -1,0 +1,18 @@
+<header>
+    <div class="headercontainer">
+        <div class="headerbutton servers" id="servers">
+            <p>Servers</p> 
+        </div>
+        <div class="headerbutton login" id="login">
+            <p>Login</p> 
+        </div>
+    </div>
+</header>
+<script>
+    servers.addEventListener('click', function(){
+        window.location.href='/servers'
+    })
+    login.addEventListener('click', function(){
+        window.location.href='/accounts/login'
+    })
+</script>

@@ -20,7 +20,6 @@ class Autos(models.Model):
     type = models.TextField()
     addinfo = models.TextField()
     picture = models.TextField()
-
     class Meta:
         managed = False
         db_table = 'autos'

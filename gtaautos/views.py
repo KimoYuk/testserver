@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+
 from gtaautos.models import Autos
 import sys, os
+import requests
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
@@ -53,66 +56,85 @@ def get_base_context(request, pagename):
 def index(request):
     context = get_base_context(request, 'Index')
     context['autos'] = Autos.objects.filter()
+    print(request.user.is_authenticated)
     return render(request, 'gtaautos/index.html', context)
 
 def addcar(request):
     context = get_base_context(request, 'Addcar')
     if request.method == 'POST' and request.FILES['picture']:
-        picture = request.FILES['picture']
-        car=[request.POST.get('name'),request.POST.get('price'),request.POST.get('pricegos'),request.POST.get('max'),request.POST.get('tohun'),request.POST.get('repair'),request.POST.get('salon'),request.POST.get('type'),request.POST.get('addinfo'),picture.file]
-        picture = add_info(car)
-        print(request.POST.get('server'))
-        record = Autos(
-            server=request.POST.get('server'),
-            name=request.POST.get('name'),
-            price=request.POST.get('price'),
-            sellprice=request.POST.get('pricegos'),
-            maxspeed=request.POST.get('max'),
-            tohun=request.POST.get('tohun'),
-            salon=request.POST.get('salon'),
-            type=request.POST.get('type'),
-            picture=picture,
-            addinfo=request.POST.get('addinfo'),
-            repair=request.POST.get('repair')
-        )
-        print(record)
-        record.save()
+        if request.POST.get('code')!=5227:
+            picture = request.FILES['picture']
+            car=[request.POST.get('name'),request.POST.get('price'),request.POST.get('pricegos'),request.POST.get('max'),request.POST.get('tohun'),request.POST.get('repair'),request.POST.get('salon'),request.POST.get('type'),request.POST.get('addinfo'),picture.file]
+            picture = add_info(car)
+            print(request.POST.get('server'))
+            record = Autos(
+                server=request.POST.get('server'),
+                name=request.POST.get('name'),
+                price=request.POST.get('price'),
+                sellprice=request.POST.get('pricegos'),
+                maxspeed=request.POST.get('max'),
+                tohun=request.POST.get('tohun'),
+                salon=request.POST.get('salon'),
+                type=request.POST.get('type'),
+                picture=picture,
+                addinfo=request.POST.get('addinfo'),
+                repair=request.POST.get('repair')
+            )
+            print(record)
+            record.save()
     return render(request, 'gtaautos/addcar.html', context)
 
-def editcar(request):
-    
-    context = get_base_context(request, 'Editcar')
-    if request.method == 'POST' and request.POST.get('action')=='name':
-        car=request.POST.get('name')
-        print(car)
-        info = Autos.objects.filter(name=car)
-        context['info']=info
-        context['action'] = 'editcar'
-    elif request.method == 'POST' and request.POST.get('action')=='editcar':
-        picture = request.FILES['picture']
-        cars = [request.POST.get('name'), request.POST.get('price'), request.POST.get('pricegos'),
-               request.POST.get('max'), request.POST.get('tohun'), request.POST.get('repair'),
-               request.POST.get('salon'), request.POST.get('type'), request.POST.get('addinfo'), picture.file]
-        picture = add_info(cars)
-        car = request.POST.get('name')
-        info = Autos.objects.get(name=car)
-        info.server=request.POST.get('server')
-        info.name=request.POST.get('name')
-        info.price=request.POST.get('price')
-        info.sellprice=request.POST.get('pricegos')
-        info.maxspeed=request.POST.get('max')
-        info.tohun=request.POST.get('tohun')
-        info.salon=request.POST.get('salon')
-        info.type=request.POST.get('type')
-        info.picture=picture
-        info.addinfo=request.POST.get('addinfo')
-        info.repair=request.POST.get('repair')
-        info.save()
-        return redirect("index")
-    elif request.method == 'GET':
-        context['action']='findname'
-        print('d')
-    return render(request, 'gtaautos/editcar.html', context)
+def deletecar(request):
+    context = get_base_context(request, 'Deletecar')
+    return render(request, 'gtaautos/deletecar.html', context)
+
+
+
+# def editcar(request):
+#
+#     context = get_base_context(request, 'Editcar')
+#     if request.method == 'POST' and request.POST.get('action')=='name':
+#         car=request.POST.get('name')
+#         print(car)
+#         info = Autos.objects.filter(name=car)
+#         context['info']=info
+#         context['action'] = 'editcar'
+#     elif request.method == 'POST' and request.POST.get('action')=='editcar':
+#         picture = request.FILES['picture']
+#         cars = [request.POST.get('name'), request.POST.get('price'), request.POST.get('pricegos'),
+#                request.POST.get('max'), request.POST.get('tohun'), request.POST.get('repair'),
+#                request.POST.get('salon'), request.POST.get('type'), request.POST.get('addinfo'), picture.file]
+#         picture = add_info(cars)
+#         car = request.POST.get('name')
+#         info = Autos.objects.get(name=car)
+#         info.server=request.POST.get('server')
+#         info.name=request.POST.get('name')
+#         info.price=request.POST.get('price')
+#         info.sellprice=request.POST.get('pricegos')
+#         info.maxspeed=request.POST.get('max')
+#         info.tohun=request.POST.get('tohun')
+#         info.salon=request.POST.get('salon')
+#         info.type=request.POST.get('type')
+#         info.picture=picture
+#         info.addinfo=request.POST.get('addinfo')
+#         info.repair=request.POST.get('repair')
+#         info.save()
+#         return redirect("index")
+#     elif request.method == 'GET':
+#         context['action']='findname'
+#         print('d')
+#     return render(request, 'gtaautos/editcar.html', context)
+
+def editservers(request):
+    context = get_base_context(request, 'Editservers')
+    context['servers'] = Autos.objects.values('server').distinct()
+    return render(request, 'gtaautos/serverlistforedit.html', context)
+
+def editautos(request, server):
+    context = get_base_context(request, 'Editautos')
+    servers = Autos.objects.values('server').distinct()
+    context['autos']=Autos.objects.order_by('name').filter(server=servers[int(server)]['server']).values('name')
+    return render(request, 'gtaautos/autoslistforedit.html', context)
 
 def serverlist(request):
     context = get_base_context(request, 'Serverlist')
@@ -123,14 +145,59 @@ def serverlist(request):
 def autoslist(request, server):
     servers=Autos.objects.values('server').distinct()
     context = get_base_context(request, 'Autoslist')
-    context['autos']=Autos.objects.filter(server=servers[int(server)]['server']).values('name')
+    context['autos']=Autos.objects.order_by('name').filter(server=servers[int(server)]['server']).values('name')
     return render(request, 'gtaautos/autoslist.html', context)
+
+def editautopage(request, server, auto):
+    context = get_base_context(request, 'Editautopage')
+    if request.method == 'POST':
+        car = request.POST.get('name')
+        info = Autos.objects.get(name=car)
+        print(request.POST)
+
+        if request.FILES.get('picture')!=None:
+            picture = request.FILES['picture'].file
+            print(picture)
+        else:
+            picture=requests.get(info.picture, stream=True).raw
+
+
+        cars = [request.POST.get('name'), request.POST.get('price'), request.POST.get('pricegos'),
+                       request.POST.get('max'), request.POST.get('tohun'), request.POST.get('repair'),
+                       request.POST.get('salon'), request.POST.get('type'), request.POST.get('addinfo'), picture]
+        picture = add_info(cars)
+        info.picture = picture
+        info.server=request.POST.get('server')
+        info.name=request.POST.get('name')
+        info.price=request.POST.get('price')
+        info.sellprice=request.POST.get('pricegos')
+        info.maxspeed=request.POST.get('max')
+        info.tohun=request.POST.get('tohun')
+        info.salon=request.POST.get('salon')
+        info.type=request.POST.get('type')
+        info.addinfo=request.POST.get('addinfo')
+        info.repair=request.POST.get('repair')
+        if request.POST.get('ifdelete')=='Delete':
+            Autos.objects.order_by('name').filter(server=request.POST.get('server'), name=request.POST.get('name')).delete()
+        else:
+            info.save()
+        return redirect('/')
+    else:
+        servers=Autos.objects.values('server').distinct()
+        context['servers']=servers
+        autos=Autos.objects.filter(server=servers[int(server)]['server']).values('name')
+        context['auto']=Autos.objects.order_by('name').filter(name=autos[int(auto)]['name'],server=servers[int(server)]['server']).get()
+        print(context['auto'].name)
+        return render(request, 'gtaautos/autopageforedit.html', context)
 
 def autopage(request, server, auto):
     context = get_base_context(request, 'Autopage')
     servers=Autos.objects.values('server').distinct()
-    autos=Autos.objects.filter(server=servers[int(server)]['server']).values('name')
-    context['auto']=Autos.objects.filter(name=autos[int(auto)]['name'],server=servers[int(server)]['server']).get()
+    autos=Autos.objects.order_by('name').filter(server=servers[int(server)]['server']).values('name')
+    context['auto']=Autos.objects.order_by('name').filter(name=autos[int(auto)]['name'],server=servers[int(server)]['server']).get()
     print(context['auto'].name)
     return render(request, 'gtaautos/autopage.html', context)
+
+
+
 

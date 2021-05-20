@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    {% include 'gtaautos/includes/head.html' %}
+    <style>
+        .picture{
+            background-image: url({{auto.picture}});
+        }
+    </style>
 </head>
 <body>
-    <div> {{auto.name}}</div>
-    <div> {{auto.price}}</div>
-    <div> {{auto.maxspeed}}</div>
-    <div> {{auto.tohun}}</div>
-    <div> {{auto.sellprice}}</div>
-    <div> {{auto.salon}}</div>
-    <div> {{auto.repair}}</div>
-    <a href={{auto.picture}}> ссылочка</a>
+    <div class="back" id="back"><p>Назад</p></div>
+
+    {% if user.is_authenticated %}
+    {% include 'gtaautos/includes/headeradmin.html' %}
+    {% else %}
+    {% include 'gtaautos/includes/header.html' %}
+    {% endif %}
+
+    <div class="pccont">
+        <div class="picture"></div>
+    </div>
+
 </body>
+<script>
+    back.addEventListener('click', function(){
+        history.back()
+        // alert('dd')
+    })
+</script>
 </html>

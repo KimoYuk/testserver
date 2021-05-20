@@ -36,19 +36,20 @@ SECRET_KEY = '73g5+gvqltg^tnboodilkd84%^pw=sssyuc(bx5da4!!y5d(yh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gtaautos.herokuapp.com', '45.67.59.231', 'gtaautos.ru']
+ALLOWED_HOSTS = ['gtaautos.herokuapp.com', 'gtaautos.ru', '45.67.59.231', 'www.gtaautos.ru']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'gtaautos',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gtaautos'
+
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'website.urls'
 
@@ -85,7 +87,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES ={
+DATABASES = {
     'default':{
         'ENGINE':'django.db.backends.mysql',
         'NAME':'mydatabase',
@@ -93,10 +95,9 @@ DATABASES ={
         'PASSWORD':'mypassword',
         'HOST':'localhost',
         'PORT':'3306'
+
 }
 }
-DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 
@@ -137,6 +138,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT='static'
+STATIC_ROOT = 'static'
 
+
+# options = DATABASES['default'].get('OPTIONS', {})
+# options.pop('sslmode', None)
 

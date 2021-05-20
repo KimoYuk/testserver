@@ -1,0 +1,33 @@
+<header>
+    <div class="headercontainer">
+        <div class="headerbutton servers" id="servers">
+            <p>Servers</p>
+        </div>
+        <div class="headerbutton menuopener"><p>Menu</p></div>
+        <div class="menu">
+            <div class="headerbutton edit" id="edit">
+                <p>Edit</p> 
+            </div>
+            <div class="headerbutton add" id="add">
+                <p>Add</p>
+            </div>
+            <div class="headerbutton logout" id="logout">
+                <p>Log out</p> 
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    servers.addEventListener('click', function () {
+        window.location.href = '/servers'
+    })
+    edit.addEventListener('click', function () {
+        window.location.href = '/edit'
+    })
+    add.addEventListener('click', function () {
+        window.location.href = '/add'
+    })
+    logout.addEventListener('click', function () {
+        window.location.href = '/accounts/logout'
+    })
+</script>

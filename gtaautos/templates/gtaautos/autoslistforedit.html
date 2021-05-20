@@ -9,9 +9,7 @@
 <body>
     {% if user.is_authenticated %}
     {% include 'gtaautos/includes/headeradmin.html' %}
-    {% else %}
-    {% include 'gtaautos/includes/header.html' %}
-    {% endif %}
+
     <div class="back" id="back"><p>Назад</p></div>
 
     <div class="autocont">
@@ -22,6 +20,10 @@
         {% endfor %}
         <div class="autoboxcont" style="visibility: hidden"></div>
     </div>
+{% else %}
+    {% include 'gtaautos/includes/header.html' %}
+    <div>Here is no page for you</div>
+    {% endif %}
 </body>
 <script>
     let rows = document.getElementsByClassName('autobox')

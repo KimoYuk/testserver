@@ -20,8 +20,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('add/', views.addcar),
-    path('edit/', views.editcar),
+    path('edit/', views.editservers),
+    path('edit/<server>/', views.editautos),
+    path('edit/<server>/<auto>/', views.editautopage),
+    path('delete/', views.deletecar),
     path('servers/', views.serverlist),
     path('servers/<server>/', views.autoslist),
-    path('servers/<server>/<auto>/', views.autopage)
+    path('servers/<server>/<auto>/', views.autopage),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]

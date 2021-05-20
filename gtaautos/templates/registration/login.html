@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    {% include 'gtaautos/includes/head.html' %}
+
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+    {% include 'gtaautos/includes/headeradmin.html' %}
+    {% else %}
+    {% include 'gtaautos/includes/header.html' %}
+    {% endif %}
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}" >
+        {% csrf_token %}
+        <div class="logintabla">
+            <div><p>Username</p></div>
+            <input autocomplete="off" type="text" name="username" autofocus autocapitalize="none" maxlength="150" required id="id_username">
+            <div><p>Password</p></div>
+            <input autocomplete="off" type="password" name="password" required id="id_password">
+            <button>Enter</button>
+            
+        </div>
+
+        
+    </form>
+</body>
+<script>
+    console.log()
+</script>
+</html>

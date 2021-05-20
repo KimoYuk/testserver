@@ -4,40 +4,42 @@
 
 <head>
     {% include 'gtaautos/includes/head.html' %}
+
 </head>
 
 <body>
-    {% if user.is_authenticated %}
-    {% include 'gtaautos/includes/headeradmin.html' %}
-    {% else %}
-    {% include 'gtaautos/includes/header.html' %}
-    {% endif %}
-    <div class="back" id="back"><p>Назад</p></div>
+{% if user.is_authenticated %}
+{% include 'gtaautos/includes/headeradmin.html' %}
 
-    <div class="autocont">
-        {% for auto in autos %}
-        <div class="autoboxcont">
-            <div class="autobox">{{auto.name}}</div>
-        </div>
-        {% endfor %}
-        <div class="autoboxcont" style="visibility: hidden"></div>
+<div class="back" id="back"><p>Назад</p></div>
+
+<div class="autocont">
+    {% for server in servers %}
+    <div class="autoboxcont">
+        <div class="autobox">{{server.server}}</div>
     </div>
+    {% endfor %}
+    <div class="autoboxcont" style="visibility: hidden"></div>
+</div>
+{% else %}
+{% include 'gtaautos/includes/header.html' %}
+<div>Here is no page for you</div>
+{% endif %}
 </body>
 <script>
     let rows = document.getElementsByClassName('autobox')
-    
     for (var i = 0; i < rows.length; i++) {
         console.log(window.location.href)
-        let newUrl = window.location.href + i
+        let newUrl = window.location.href + i + '/'
         console.log(newUrl)
         rows[i].addEventListener('click', function () {
             window.location.href = newUrl
         })
     }
-
     back.addEventListener('click', function(){
         history.back()
     })
+
 </script>
 
 </html>
